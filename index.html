@@ -7,7 +7,8 @@
     <title>ЧАЙНИКИ 2026 — Кипим, пока вы  рыдаете ☕️</title>
     <meta name="description" content="15 самых горячих гаджетов 2026 + юмор">
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Press+Start+2P&family=Rubik+Mono+One&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+    <!-- reduced to a single font family to cut requests -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
     <style>
@@ -99,9 +100,7 @@ section{padding:160px 6%;position:relative;z-index:3;}
 
 
 <section class="hero" id="home">
-        <video autoplay muted loop playsinline>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-neon-tunnel-with-moving-lights-29801-small.mp4" type="video/mp4">
-        </video>
+        <!-- background video removed to reduce page weight; gradient CSS will be used instead -->
         <div>
             <h1>Команда Чайники</h1>
             <p>Кипим так, что у вас  мозг вытекает</p>
@@ -137,11 +136,11 @@ section{padding:160px 6%;position:relative;z-index:3;}
     <section id="gadgets">
         <h2>15 гаджетов 2026</h2>
         <div class="gadgets">
-            <div class="card"><img src="bend.webp" alt=""><div class="card-content"><h3>iPhone 18 Bend Ultra</h3><div class="joke">Сгибается в любую сторону — как твоя сила воли в пятницу вечером.</div></div></div>
-            <div class="card"><img src="kettle.webp" alt=""><div class="card-content"><h3>Чайник Xiaomi 9000 Ultra</h3><div class="joke">Кипятит воду за 0,1 сек и твою жизнь за 0,05. Сам звонит маме: «Он опять забыл меня выключить».</div></div></div>
-            <div class="card"><img src="robodog.webp" alt=""><div class="card-content"><h3>Робопёс Верный 3000</h3><div class="joke">Приносит тапки. Гавкает только когда ты врёшь — у тебя дома теперь тишина.</div></div></div>
-            <div class="card"><img src="charge.webp" alt=""><div class="card-content"><h3>Квантовая зарядка 1000Вт</h3><div class="joke">Заряжает телефон через стену. Соседский тоже заряжает. И его кота.</div></div></div>
-            <div class="card"><img src="teleport.webp" alt=""><div class="card-content"><h3>Умный унитаз</h3><div class="joke">Анализирует всё, что ты туда кладешь. Потом шлёт отчёт маме.</div></div></div>
+            <div class="card"><img loading="lazy" src="bend.webp" alt="" width="800" height="380"><div class="card-content"><h3>iPhone 18 Bend Ultra</h3><div class="joke">Сгибается в любую сторону — как твоя сила воли в пятницу вечером.</div></div></div>
+            <div class="card"><img loading="lazy" src="kettle.webp" alt="" width="800" height="380"><div class="card-content"><h3>Чайник Xiaomi 9000 Ultra</h3><div class="joke">Кипятит воду за 0,1 сек и твою жизнь за 0,05. Сам звонит маме: «Он опять забыл меня выключить».</div></div></div>
+            <div class="card"><img loading="lazy" src="robodog.webp" alt="" width="800" height="380"><div class="card-content"><h3>Робопёс Верный 3000</h3><div class="joke">Приносит тапки. Гавкает только когда ты врёшь — у тебя дома теперь тишина.</div></div></div>
+            <div class="card"><img loading="lazy" src="charge.webp" alt="" width="800" height="380"><div class="card-content"><h3>Квантовая зарядка 1000Вт</h3><div class="joke">Заряжает телефон через стену. Соседский тоже заряжает. И его кота.</div></div></div>
+            <div class="card"><img loading="lazy" src="teleport.webp" alt="" width="800" height="380"><div class="card-content"><h3>Умный унитаз</h3><div class="joke">Анализирует всё, что ты туда кладешь. Потом шлёт отчёт маме.</div></div></div>
 
 
 <div class="card"><img src="teleport.webp" alt=""><div class="card-content"><h3>Телепорт в туалет</h3><div class="joke">Работает только в одну сторону. Обратно — пешком.</div></div></div>
@@ -187,8 +186,23 @@ section{padding:160px 6%;position:relative;z-index:3;}
         <span style="color:#00ff88;font-size:3rem;">Мы не несем ответственности за испорченные трусы и слёзы от смеха</span>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- defer particles.js: load after interaction or idle to save initial bandwidth -->
     <script>
+        (function(){
+            let particlesLoaded = false;
+            function loadParticles(){
+                if (particlesLoaded) return; particlesLoaded = true;
+                const s = document.createElement('script');
+                s.src = 'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js';
+                s.onload = function(){ try{ if (window.particlesJS) particlesJS("particles-js", {particles:{number:{value:100},color:{value:"#00ff88"},size:{value:4,random:true},line_linked:{enable:true,color:"#00ff88",opacity:0.4,width:1},move:{enable:true,speed:3}},interactivity:{events:{onhover:{enable:true,mode:"repulse"}}},retina_detect:true}); }catch(e){console.warn('particles init failed',e);} };
+                document.body.appendChild(s);
+            }
+            // load on first user interaction or after 2s idle
+            window.addEventListener('scroll', loadParticles, {once:true, passive:true});
+            window.addEventListener('mousemove', loadParticles, {once:true});
+            setTimeout(loadParticles, 2000);
+        })();
+
         // cursor guard (cursor element exists at top of body)
         const cursor = document.querySelector('.cursor');
         if (cursor) {
@@ -196,13 +210,6 @@ section{padding:160px 6%;position:relative;z-index:3;}
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';
             });
-        }
-
-        // particles init
-        if (window.particlesJS) {
-            try {
-                particlesJS("particles-js", {particles:{number:{value:200},color:{value:"#00ff88"},size:{value:5,random:true},line_linked:{enable:true,color:"#00ff88",opacity:0.5,width:2},move:{enable:true,speed:6}},interactivity:{events:{onhover:{enable:true,mode:"repulse"}}},retina_detect:true});
-            } catch (e){ console.warn('particles init failed', e); }
         }
         // Preloader fade-out and removal (safe)
         (function(){

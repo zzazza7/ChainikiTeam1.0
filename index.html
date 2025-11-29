@@ -12,7 +12,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
     <style>
-        :root{--p:#00ff88;--s:#00ffff;--a:#ff00ff;--r:#ff0044;--d:#000;--g:rgba(15,15,35,0.75);}
+    :root{--p:#00ff88;--s:#00ffff;--a:#ff00ff;--r:#ff0044;--d:#000;--g:rgba(15,15,35,0.75);}
+    /* global compacting: tweak scale (0.6 - 1.0). lower value = smaller UI */
+    :root{--ui-scale:0.82}
+
+    /* page wrapper scaling */
+    #page-scale-wrap{transform:scale(var(--ui-scale));transform-origin:top center;}
+
+    /* smaller button defaults */
+    button{padding:8px 12px;font-size:0.92rem;border-radius:8px}
+    .nav-links a{padding:6px 8px}
         *{margin:0;padding:0;box-sizing:border-box;}
     /* allow normal cursor for usability and adjust base fonts */
     body{font-family:'Orbitron',sans-serif;background:#000;color:#fff;overflow-x:hidden;cursor:auto;}
@@ -94,6 +103,7 @@ section{padding:80px 4%;position:relative;z-index:3;}
 </head>
 <body>
 
+    <div id="page-scale-wrap">
     <div id="preloader">
         <img src="photo_2025-11-25_20-08-47.jpg" alt="Кипим...">
     <h1 style="background:linear-gradient(90deg,var(--p),var(--a));background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent;font-size:6rem;">ЧАЙНИКИ Кипятят воду...</h1>
@@ -400,7 +410,8 @@ section{padding:80px 4%;position:relative;z-index:3;}
 
             // autosave every 10s
             setInterval(()=>{ saveGame(); }, 10000);
-        })();
-    </script>
-</body>
-</html>
+            })();
+        </script>
+        </div> <!-- end #page-scale-wrap -->
+    </body>
+    </html>
